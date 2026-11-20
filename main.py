@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Sum up 19 November 2026's world news in one image.
+"""19 November 2026 world news, in one image.
 
-Writes the bundled news-atlas image to /output/entry.png.
-Stdlib only, no network, deterministic: the output is a byte-for-byte
-copy of the image shipped in this repository (entry.png).
+Entry program for the make.fun news-image-20261119 bounty. It writes the
+news-atlas image bundled in this repository to the output path the
+bounty harness expects (/output/entry.png). Standard library only, no
+network access, and fully deterministic: every run writes the same
+bytes.
 """
 
 import hashlib
@@ -11,40 +13,42 @@ import os
 import shutil
 import sys
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-SRC = os.path.join(HERE, "entry.png")
+IMAGE_NAME = "entry.png"
 
 
-def output_dir():
-    for var in ("MAKEFUN_OUTPUT_DIR", "OUTPUT_DIR"):
-        v = os.environ.get(var)
-        if v:
-            return v
-    return "/output"
+def _digest(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        while True:
+            block = handle.read(1 << 16)
+            if not block:
+                break
+            digest.update(block)
+    return digest.hexdigest()
 
 
-def sha256_of(path):
-    h = hashlib.sha256()
-    with open(path, "rb") as f:
-        for chunk in iter(lambda: f.read(65536), b""):
-            h.update(chunk)
-    return h.hexdigest()
+def _destination():
+    for name in ("MAKEFUN_OUTPUT_DIR", "OUTPUT_DIR"):
+        value = os.environ.get(name)
+        if value:
+            return os.path.join(value, IMAGE_NAME)
+    return os.path.join("/output", IMAGE_NAME)
 
 
-def main():
-    out_dir = output_dir()
-    os.makedirs(out_dir, exist_ok=True)
-    dst = os.path.join(out_dir, "entry.png")
-    # Write via a temp file in the same directory, then rename, so a
-    # partial write can never leave a truncated entry.png behind.
-    tmp = dst + ".tmp"
-    shutil.copyfile(SRC, tmp)
-    if sha256_of(tmp) != sha256_of(SRC):
-        os.remove(tmp)
-        raise SystemExit("entry.png copy failed verification")
-    os.replace(tmp, dst)
+def run():
+    here = os.path.dirname(os.path.abspath(__file__))
+    source = os.path.join(here, IMAGE_NAME)
+    target = _destination()
+    os.makedirs(os.path.dirname(target), exist_ok=True)
+    staging = target + ".part"
+    shutil.copyfile(source, staging)
+    if _digest(staging) != _digest(source):
+        os.unlink(staging)
+        print("copied image failed its checksum", file=sys.stderr)
+        return 1
+    os.replace(staging, target)
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    raise SystemExit(run())

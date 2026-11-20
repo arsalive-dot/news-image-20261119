@@ -4,28 +4,30 @@
 
 # The World in One Day — Thursday 19 November 2026
 
-A dense colour infographic atlas summing up one day of world news in a
-single 1024×1024 image: 52 stories in all.
+One dense colour atlas that packs a whole day of world news into a
+single 1024×1024 image: 52 stories, three of them leading the page.
 
-The three biggest stories of the day lead the page. In Shenzhen, Trump, Xi
-and Putin held the first-ever three-way summit of the three powers — 90
-minutes on the APEC sidelines, ending in a joint "peace declaration" with no
-breakthrough. In The Hague, the International Court of Justice ruled 9–6
-that Myanmar committed genocide against the Rohingya in the 2017 crackdown,
-the first such finding in the court's 80-year history. And on Wall Street,
-stocks plunged on the day AI firm Anthropic went public in the largest IPO
-on record — the Dow fell 1,101 points while Anthropic closed up 17.1% on
-its $83 offer price.
+The day's three biggest stories open it. In Shenzhen, Trump, Xi and
+Putin sat down for the first three-way summit of the three powers —
+90 minutes on the APEC sidelines, ending in a joint "peace
+declaration" with no breakthrough. In The Hague, the International
+Court of Justice ruled 9–6 that Myanmar committed genocide against
+the Rohingya in the 2017 crackdown, the first such finding in the
+court's 80-year history. And on Wall Street, stocks plunged on the
+day AI firm Anthropic went public in the largest IPO on record — the
+Dow fell 1,101 points while Anthropic closed up 17.1% on its $83
+offer price.
 
-Below the leads: 13 illustrated stories (the COP31 draft dropping every
-fossil-fuel mention, Cyclone Akvan bearing down on India's east coast, the
-Crimea Bridge hit for a third time in four days, GTA VI's launch, and
-more), a world map with 16 numbered pins, a figures strip with the day's
-verified numbers, and a numbered list of 36 more stories. Claims that could
-not be independently confirmed — above all the reported tanker explosions
-in the Strait of Hormuz — are marked CLAIM, not stated as fact. Every
-figure, location and meeting was checked against the sources listed in the
-image (Reuters, AP, AFP, BBC, Al Jazeera, and others).
+Under the leads: 13 illustrated stories (the COP31 draft dropping
+every fossil-fuel mention, Cyclone Akvan bearing down on India's east
+coast, the Crimea Bridge hit for a third time in four days, GTA VI's
+launch, and more), a world map with 16 numbered pins, a figures strip
+with the day's verified numbers, and a numbered list of 36 more
+stories. Claims that could not be independently confirmed — above all
+the reported tanker explosions in the Strait of Hormuz — are marked
+CLAIM, not stated as fact. Every figure, location and meeting was
+checked against the sources listed in the image (Reuters, AP, AFP,
+BBC, Al Jazeera, and others).
 
 ## Run it
 
@@ -33,5 +35,6 @@ image (Reuters, AP, AFP, BBC, Al Jazeera, and others).
 MAKEFUN_OUTPUT_DIR=out python3 main.py
 ```
 
-This copies the bundled `entry.png` to `out/entry.png`. Stdlib only, no
-network access, deterministic output.
+This copies the bundled `entry.png` to `out/entry.png`. It uses only
+the Python standard library, touches no network, and its output is
+deterministic.
